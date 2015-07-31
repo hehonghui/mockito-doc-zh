@@ -13,6 +13,6 @@ Mockito框架官方地址[mockito](http://mockito.org/)，[文档地址](http://
 | chaosss | 16-26条 |
 | tiiime | 27~35条 |
 | deshiwei | a~c开头的方法,包含 |
-| objecttime | d~m开头的方法 |
+| objectlife | d~m开头的方法 |
 | Conquer | n-w开头的函数 |
 
