@@ -1,4 +1,4 @@
-![](https://github.com/mockito/mockito.github.io/raw/master/img/logo%402x.png)
+![](http://img.blog.csdn.net/20150731162529393)
 
 # Mockito框架中文文档
 Mockito框架官方地址[mockito](http://mockito.org/)，[文档地址](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html)。
