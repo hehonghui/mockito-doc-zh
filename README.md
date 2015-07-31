@@ -3,9 +3,11 @@
 # Mockito框架中文文档
 Mockito框架官方地址[mockito](http://mockito.org/)，[文档地址](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html)。
 
+[参考资料](http://objccn.io/issue-15-5/)
+
 ## 任务分配 
 
-各自整理自己的负责的章节，每个人负责的任务独立放在一个markdown中，文件名为自己的用户名即可，翻译截至时间  2015-08-06。
+各自整理自己的负责的章节，每个人负责的任务独立放在一个markdown中，文件名为自己的用户名即可，在完成校对之前需要保留原文，翻译截至时间  2015-08-06。
 
 |  成员 |  任务  |
 |-----------|------|
