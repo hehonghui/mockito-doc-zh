@@ -129,24 +129,30 @@ Don't mock List class 'in real'. Use a real instance instead.
 
 ```java
  //You can mock concrete classes, not only interfaces
+ // 你可以mock具体的类型,不仅只是接口
  LinkedList mockedList = mock(LinkedList.class);
 
  //stubbing
+ // 测试桩
  when(mockedList.get(0)).thenReturn("first");
  when(mockedList.get(1)).thenThrow(new RuntimeException());
 
  //following prints "first"
+ // 输出“first”
  System.out.println(mockedList.get(0));
 
  //following throws runtime exception
+ // 抛出异常
  System.out.println(mockedList.get(1));
 
  //following prints "null" because get(999) was not stubbed
+ // 因为get(999) 没有打桩，因此输出null
  System.out.println(mockedList.get(999));
 
  //Although it is possible to verify a stubbed invocation, usually it's just redundant
  //If your code cares what get(0) returns then something else breaks (often before even verify() gets executed).
  //If your code doesn't care what get(0) returns then it should not be stubbed. Not convinced? See here.
+ // 验证get(0)被调用的次数
  verify(mockedList).get(0);
 ```
  
@@ -155,22 +161,133 @@ Don't mock List class 'in real'. Use a real instance instead.
 * Once stubbed, the method will always return stubbed value regardless of how many times it is called.
 * Last stubbing is more important - when you stubbed the same method with the same arguments many times. Other words: the order of stubbing matters but it is only meaningful rarely, e.g. when stubbing exactly the same method calls or sometimes when argument matchers are used, etc.
 
-* 默认情况下，所有的函数都有返回值。
+* 默认情况下，所有的函数都有返回值。mock函数默认返回的是null，一个空的集合或者一个被对象类型包装的内置类型，例如0、false对应的对象类型为Integer、Boolean；
+* 测试桩函数可以被覆写 : 例如常见的测试桩函数可以用于初始化夹具，但是测试函数能够覆写它。请注意，覆写测试桩函数是一种可能存在潜在问题的做法；
+* 一旦测试桩函数被调用，该函数将会一致返回固定的值；
+* 上一次调用测试桩函数有时候极为重要-当你调用一个函数很多次时，最后一次调用可能是你所感兴趣的。
 
 ### 3. [参数匹配器 (matchers)]()
 
+Mockito verifies argument values in natural java style: by using an equals() method. Sometimes, when extra flexibility is required then you might use argument matchers:
 
+Mockito以自然的java风格来验证参数值: 使用equals()函数。有时，当需要额外的灵活性时你可能需要使用参数匹配器，也就是argument matchers :
+
+```java
+ //stubbing using built-in anyInt() argument matcher
+ // 使用内置的anyInt()参数匹配器
+ when(mockedList.get(anyInt())).thenReturn("element");
+
+ //stubbing using custom matcher (let's say isValid() returns your own matcher implementation):
+ // 使用自定义的参数匹配器( 在isValid()函数中返回你自己的匹配器实现 )
+ when(mockedList.contains(argThat(isValid()))).thenReturn("element");
+
+ //following prints "element"
+ // 输出element
+ System.out.println(mockedList.get(999));
+
+ //you can also verify using an argument matcher
+ // 你也可以验证参数匹配器
+ verify(mockedList).get(anyInt());
+```
+ 
+Argument matchers allow flexible verification or stubbing. Click here to see more built-in matchers and examples of custom argument matchers / hamcrest matchers.
+
+参数匹配器使验证和测试桩变得更灵活。[点击这里](http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html)查看更多内置的匹配器以及自定义参数匹配器或者hamcrest 匹配器的示例。
+
+For information solely on custom argument matchers check out javadoc for ArgumentMatcher class.
+
+如果仅仅是获取自定义参数匹配器的信息，查看[ArgumentMatcher类文档](http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html)即可。
+
+Be reasonable with using complicated argument matching. The natural matching style using equals() with occasional anyX() matchers tend to give clean & simple tests. Sometimes it's just better to refactor the code to allow equals() matching or even implement equals() method to help out with testing.
+
+为了合理的使用复杂的参数匹配，使用equals()与anyX() 的匹配器会使得测试代码更简洁、简单。有时，会迫使你重构代码以使用equals()匹配或者实现equals()函数来帮助你进行测试。
+
+Also, read section 15 or javadoc for ArgumentCaptor class. ArgumentCaptor is a special implementation of an argument matcher that captures argument values for further assertions.
+
+同时建议你阅读[第15章节](#sec_15)或者[ArgumentCaptor类文档](http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentCaptor.html)。ArgumentCaptor是一个能够捕获参数值的特俗参数匹配器。
+
+Warning on argument matchers:
+
+If you are using argument matchers, all arguments have to be provided by matchers.
+
+参数匹配器的注意点 : 
+
+如果你使用参数匹配器,所有参数都必须由匹配器提供。
+
+E.g: (example shows verification but the same applies to stubbing):
+示例 : ( 该示例展示了如何多次应用于测试桩函数的验证 ) 
+
+```java
+   verify(mock).someMethod(anyInt(), anyString(), eq("third argument"));
+   //above is correct - eq() is also an argument matcher
+   // 上述代码是正确的,因为eq()也是一个参数匹配器
+
+   verify(mock).someMethod(anyInt(), anyString(), "third argument");
+   //above is incorrect - exception will be thrown because third argument 
+   // 上述代码是错误的,因为所有参数必须由匹配器提供，而参数"third argument"并非由参数匹配器提供，因此的缘故会抛出异常
+```
+ 
+Matcher methods like anyObject(), eq() do not return matchers. Internally, they record a matcher on a stack and return a dummy value (usually null). This implementation is due static type safety imposed by java compiler. The consequence is that you cannot use anyObject(), eq() methods outside of verified/stubbed method.
+
+像anyObject(), eq()这样的匹配器函数不会返回匹配器。它们会在内部将匹配器记录到一个栈当中，并且返回一个假的值，通常为null。`这样的实现是由于被Java编译器强加的静态类型安全`。结果就是你不能在验证或者测试桩函数之外使用anyObject(), eq()函数。
 
 
 ### 4. [验证函数的确切、最少、从未调用次数]()
 
+```java
+ //using mock
+ mockedList.add("once");
 
+ mockedList.add("twice");
+ mockedList.add("twice");
+
+ mockedList.add("three times");
+ mockedList.add("three times");
+ mockedList.add("three times");
+
+ //following two verifications work exactly the same - times(1) is used by default
+ // 下面的两个验证函数效果一样,因为verify默认验证的就是times(1)
+ verify(mockedList).add("once");
+ verify(mockedList, times(1)).add("once");
+
+ //exact number of invocations verification
+ // 验证具体的执行次数
+ verify(mockedList, times(2)).add("twice");
+ verify(mockedList, times(3)).add("three times");
+
+ //verification using never(). never() is an alias to times(0)
+ // 使用never()进行验证,never相当于times(0)
+ verify(mockedList, never()).add("never happened");
+
+ //verification using atLeast()/atMost()
+ // 使用atLeast()/atMost()
+ verify(mockedList, atLeastOnce()).add("three times");
+ verify(mockedList, atLeast(2)).add("five times");
+ verify(mockedList, atMost(5)).add("three times");
+
+```
+
+times(1) is the default. Therefore using times(1) explicitly can be omitted.
+
+verify函数默认验证的是执行了times(1)，也就是某个测试函数是否执行了1次.因此，times(1)通常被省略了。
 
 
 ### 5. [为返回值为void的函数通过Stub抛出异常]()
 
+```java
+  doThrow(new RuntimeException()).when(mockedList).clear();
 
+   //following throws RuntimeException:
+   // 调用这句代码会抛出异常
+   mockedList.clear();
+```
+ 
+Read more about doThrow|doAnswer family of methods in paragraph 12.
+Initially, stubVoid(Object) was used for stubbing voids. Currently stubVoid() is deprecated in favor of doThrow(Throwable). This is because of improved readability and consistency with the family of doAnswer(Answer) methods.
 
+关于doThrow|doAnswer 等函数族的信息请阅读第十二章节。
+
+最初，[stubVoid(Object)](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#stubVoid(T)) 函数用于为无返回值的函数打桩。现在stubVoid()函数已经过时,doThrow(Throwable)成为了它的继承者。这是为了提升与 doAnswer(Answer) 函数族的可读性与一致性。
 
 ### 6. [按照顺序验证执行结果]()
 
