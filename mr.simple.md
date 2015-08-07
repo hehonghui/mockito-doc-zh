@@ -289,52 +289,332 @@ Initially, stubVoid(Object) was used for stubbing voids. Currently stubVoid() is
 
 最初，[stubVoid(Object)](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#stubVoid(T)) 函数用于为无返回值的函数打桩。现在stubVoid()函数已经过时,doThrow(Throwable)成为了它的继承者。这是为了提升与 doAnswer(Answer) 函数族的可读性与一致性。
 
-### 6. [按照顺序验证执行结果]()
+### 6. [验证执行执行顺序]()
 
+```java
+ // A. Single mock whose methods must be invoked in a particular order
+ // A. 验证mock一个对象的函数执行顺序
+ List singleMock = mock(List.class);
 
+ //using a single mock
+ singleMock.add("was added first");
+ singleMock.add("was added second");
 
+ //create an inOrder verifier for a single mock
+ // 为该mock对象创建一个inOrder对象
+ InOrder inOrder = inOrder(singleMock);
+
+ //following will make sure that add is first called with "was added first, then with "was added second"
+ // 确保add函数首先执行的是add("was added first"),然后才是add("was added second")
+ inOrder.verify(singleMock).add("was added first");
+ inOrder.verify(singleMock).add("was added second");
+
+ // B. Multiple mocks that must be used in a particular order
+ // B .验证多个mock对象的函数执行顺序
+ List firstMock = mock(List.class);
+ List secondMock = mock(List.class);
+
+ //using mocks
+ firstMock.add("was called first");
+ secondMock.add("was called second");
+
+ //create inOrder object passing any mocks that need to be verified in order
+ // 为这两个Mock对象创建inOrder对象
+ InOrder inOrder = inOrder(firstMock, secondMock);
+
+ //following will make sure that firstMock was called before secondMock
+ // 验证它们的执行顺序
+ inOrder.verify(firstMock).add("was called first");
+ inOrder.verify(secondMock).add("was called second");
+
+ // Oh, and A + B can be mixed together at will
+```
+ 
+Verification in order is flexible - you don't have to verify all interactions one-by-one but only those that you are interested in testing in order.
+Also, you can create InOrder object passing only mocks that are relevant for in-order verification.
+
+验证执行顺序是非常灵活的-你不需要一个一个的验证所有交互,只需要验证你感兴趣的对象即可。
+另外，你可以仅通过那些需要验证顺序的mock对象来创建InOrder对象。
 
 ### 7. [确保交互(interaction)操作不会执行在mock对象上]()
 
+```java
+ //using mocks - only mockOne is interacted
+ // 使用Mock对象
+ mockOne.add("one");
 
+ //ordinary verification
+ // 普通验证
+ verify(mockOne).add("one");
+
+ //verify that method was never called on a mock
+ // 验证某个交互是否从未被执行
+ verify(mockOne, never()).add("two");
+
+ //verify that other mocks were not interacted
+ // 验证mock对象没有交互过
+ verifyZeroInteractions(mockTwo, mockThree);
+```
 
 
 ### 8. [查找冗余的调用]()
 
+```java
+ //using mocks
+ mockedList.add("one");
+ mockedList.add("two");
 
+ verify(mockedList).add("one");
 
+ //following verification will fail
+ // 下面的验证将会失败
+ verifyNoMoreInteractions(mockedList);
+```
+ 
+A word of warning: Some users who did a lot of classic, expect-run-verify mocking tend to use verifyNoMoreInteractions() very often, even in every test method. verifyNoMoreInteractions() is not recommended to use in every test method. verifyNoMoreInteractions() is a handy assertion from the interaction testing toolkit. Use it only when it's relevant. Abusing it leads to overspecified, less maintainable tests. You can find further reading [here](http://monkeyisland.pl/2008/07/12/should-i-worry-about-the-unexpected/).
+See also `never()` - it is more explicit and communicates the intent well.
+
+一些用户可能会在频繁地使用`verifyNoMoreInteractions()`，甚至在每个测试函数中都用。但是`verifyNoMoreInteractions()`并不建议在每个测试函数中都使用。`verifyNoMoreInteractions()`在交互测试套件中只是一个便利的验证，它的作用是当你需要验证是否存在冗余调用时。滥用它将导致测试代码的可维护性降低。你可以阅读[这篇文档](http://monkeyisland.pl/2008/07/12/should-i-worry-about-the-unexpected/)来了解更多相关信息。
+
+`never()`是一种更为明显且易于理解的形式。
 
 ### 9. [简化mock对象的创建]()
 
+* Minimizes repetitive mock creation code.
+* Makes the test class more readable.
+* Makes the verification error easier to read because the field name is used to identify the mock.
 
+* 最小化重复的创建代码
+* 使测试类的代码可读性更高
+* 使验证错误更易于阅读，因为字段名可用于标识mock对象
 
+```java
+   public class ArticleManagerTest {
+
+       @Mock private ArticleCalculator calculator;
+       @Mock private ArticleDatabase database;
+       @Mock private UserProvider userProvider;
+
+       private ArticleManager manager;
+```
+ 
+Important! This needs to be somewhere in the base class or a test runner:
+
+注意！下面这句代码需要在运行测试函数之前被调用,一般放到测试类的基类或者test runner中:
+
+```java
+ MockitoAnnotations.initMocks(testClass);
+```
+ 
+You can use built-in runner: MockitoJUnitRunner or a rule: MockitoRule.
+Read more here: MockitoAnnotations
+
+你可以使用内置的runner: [MockitoJUnitRunner] [runner] 或者一个rule : [MockitoRule][rule]。
+关于mock注解的更多信息可以阅读[MockitoAnnotations文档](http://site.mockito.org/mockito/docs/current/org/mockito/MockitoAnnotations.html)。
+
+[runner]: http://site.mockito.org/mockito/docs/current/org/mockito/runners/MockitoJUnitRunner.html
+[rule]: http://site.mockito.org/mockito/docs/current/org/mockito/junit/MockitoRule.html
 
 ### 10. [为连续的调用做测试桩 (stub) ]()
 
+Sometimes we need to stub with different return value/exception for the same method call. Typical use case could be mocking iterators. Original version of Mockito did not have this feature to promote simple mocking. For example, instead of iterators one could use Iterable or simply collections. Those offer natural ways of stubbing (e.g. using real collections). In rare scenarios stubbing consecutive calls could be useful, though:
 
+有时我们需要为同一个函数调用的不同的返回值或异常做测试桩。典型的运用就是使用mock迭代器。
+原始版本的Mockito并没有这个特性，例如，可以使用Iterable或者简单的集合来替换迭代器。这些方法提供了更自然的方式，在一些场景中为连续的调用做测试桩会很有用。示例如下 ： 
 
+```java
+ when(mock.someMethod("some arg"))
+   .thenThrow(new RuntimeException())
+   .thenReturn("foo");
+
+ //First call: throws runtime exception:
+ // 第一次调用 : 抛出运行时异常
+ mock.someMethod("some arg");
+
+ //Second call: prints "foo"
+ // 第二次调用 : 输出"foo"
+ System.out.println(mock.someMethod("some arg"));
+
+ //Any consecutive call: prints "foo" as well (last stubbing wins).
+ // 后续调用 : 也是输出"foo"
+ System.out.println(mock.someMethod("some arg"));
+```
+ 
+Alternative, shorter version of consecutive stubbing:
+另外，连续调用的另一种更简短的版本 : 
+
+```java
+// 第一次调用时返回"one",第二次返回"two",第三次返回"three"
+ when(mock.someMethod("some arg"))
+   .thenReturn("one", "two", "three");
+```
 
 ### 11. [为回调做测试桩]()
 
+Allows stubbing with generic Answer interface.
+运行为泛型接口Answer打桩。
 
+Yet another controversial feature which was not included in Mockito originally. We recommend using simple stubbing with thenReturn() or thenThrow() only. Those two should be just enough to test/test-drive any clean & simple code.
 
+在最初的Mockito里也没有这个具有争议性的特性。我们建议使用thenReturn() 或thenThrow()来打桩。这两种方法足够用于测试或者测试驱动开发。
+
+```java
+ when(mock.someMethod(anyString())).thenAnswer(new Answer() {
+     Object answer(InvocationOnMock invocation) {
+         Object[] args = invocation.getArguments();
+         Object mock = invocation.getMock();
+         return "called with arguments: " + args;
+     }
+ });
+
+ //Following prints "called with arguments: foo"
+ // 输出 : "called with arguments: foo"
+ System.out.println(mock.someMethod("foo"));
+```
 
 ### 12. [doReturn()、doThrow()、doAnswer()、doNothing()、doCallRealMethod()系列方法的运用]()
 
+Stubbing voids requires different approach from `when(Object)` because the compiler does not like void methods inside brackets...
+
+通过`when(Object)`为无返回值的函数打桩有不同的方法,因为编译器不喜欢void函数在括号内...
+
+`doThrow(Throwable)` replaces the `stubVoid(Object)` method for stubbing voids. The main reason is improved readability and consistency with the family of `doAnswer()` methods.
+
+使用`doThrow(Throwable)` 替换`stubVoid(Object)`来为void函数打桩是为了与`doAnswer()`等函数族保持一致性。
+
+Use `doThrow()` when you want to stub a void method with an exception:
+
+当你想为void函数打桩时使用含有一个exception 参数的`doAnswer()` : 
+
+```java
+   doThrow(new RuntimeException()).when(mockedList).clear();
+
+   //following throws RuntimeException:
+   // 下面的代码会抛出异常
+   mockedList.clear();
+```
+ 
+You can use `doThrow()`, `doAnswer()`, `doNothing()`, `doReturn()` and `doCallRealMethod()` in place of the corresponding call with `when()`, for any method. It is necessary when you
+
+当你调用`doThrow()`, `doAnswer()`, `doNothing()`, `doReturn()` and `doCallRealMethod()` 这些函数时可以在适当的位置调用`when()`函数. 当你需要下面这些功能时这是必须的: 
+
+* stub void methods
+* stub methods on spy objects (see below)
+* stub the same method more than once, to change the behaviour of a mock in the middle of a test.
+
+* 测试void函数
+* 在受监控的对象上测试函数
+* 不知一次的测试为同一个函数，在测试过程中改变mock对象的行为。
+
+but you may prefer to use these methods in place of the alternative with `when()`, for all of your stubbing calls.
+
+但是在调用`when()`函数时你可以选择是否调用这些上述这些函数。
+
+阅读更多关于这些方法的信息:
+
+* [doReturn(Object)](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#doReturn(java.lang.Object)) 
+* [doThrow(Throwable)](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#doThrow(java.lang.Throwable))
+* [doThrow(Class)](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#doThrow(java.lang.Class))
+* [doAnswer(Answer)](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#doAnswer(org.mockito.stubbing.Answer))
+* [doNothing()](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#doNothing())
+* [doCallRealMethod()](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#doCallRealMethod())
 
 
 
-### 13. [追踪真实对象]()
+### 13. [监控真实对象]()
+You can create spies of real objects. When you use the spy then the real methods are called (unless a method was stubbed).
+Real spies should be used carefully and occasionally, for example when dealing with legacy code.
 
+你可以为真实对象创建一个监控(spy)对象。当你使用这个spy对象时真实的对象也会也调用，除非它的函数被stub了。尽量少使用spy对象，使用时也需要小心形式，例如spy对象可以用来处理遗留代码。
 
+Spying on real objects can be associated with "partial mocking" concept. Before the release 1.8, Mockito spies were not real partial mocks. The reason was we thought partial mock is a code smell. At some point we found legitimate use cases for partial mocks (3rd party interfaces, interim refactoring of legacy code, the full article is here)
 
+监控一个真实的对象可以与“局部mock对象”概念结合起来。在1.8之前，mockito的监控功能并不是真正的局部mock对象。原因是我们认为局部mock对象的实现方式并不好，在某些时候我发现一些使用局部mock对象的合法用例。（第三方接口、临时重构遗留代码，完整的文章在[这里](http://monkeyisland.pl/2009/01/13/subclass-and-override-vs-partial-mocking-vs-refactoring/) ）
+
+```java
+   List list = new LinkedList();
+   List spy = spy(list);
+
+   //optionally, you can stub out some methods:
+   // 你可以为某些函数打桩
+   when(spy.size()).thenReturn(100);
+
+   //using the spy calls *real* methods
+   // 通过spy对象调用真实对象的函数
+   spy.add("one");
+   spy.add("two");
+
+   //prints "one" - the first element of a list
+   // 输出第一个元素
+   System.out.println(spy.get(0));
+
+   //size() method was stubbed - 100 is printed
+   // 因为size()函数被打桩了,因此这里返回的是100
+   System.out.println(spy.size());
+
+   //optionally, you can verify
+   // 交互验证
+   verify(spy).add("one");
+   verify(spy).add("two");
+```
+
+Important gotcha on spying real objects!
+理解监控真实对象非常重要！
+
+Sometimes it's impossible or impractical to use `when(Object)` for stubbing spies. Therefore when using spies please consider doReturn|Answer|Throw() family of methods for stubbing. Example:
+
+有时，在监控对象上使用`when(Object)`来进行打桩是不可能或者不切实际的。因此，当使用监控对象时请考虑`doReturn|Answer|Throw()`函数族来进行打桩。例如 : 
+
+```java
+   List list = new LinkedList();
+   List spy = spy(list);
+
+   //Impossible: real method is called so spy.get(0) throws IndexOutOfBoundsException (the list is yet empty)
+   // 不可能 : 因为当调用spy.get(0)时会调用真实对象的get(0)函数,此时会发生IndexOutOfBoundsException异常，因为真实List对象是空的
+   when(spy.get(0)).thenReturn("foo");
+
+   //You have to use doReturn() for stubbing
+   // 你需要使用doReturn()来打桩
+   doReturn("foo").when(spy).get(0);
+```
+ 
+Mockito *does not* delegate calls to the passed real instance, instead it actually creates a copy of it. So if you keep the real instance and interact with it, don't expect the spied to be aware of those interaction and their effect on real instance state. The corollary is that when an *unstubbed* method is called *on the spy* but *not on the real instance*, you won't see any effects on the real instance.
+
+Mockito并不会为真实对象代理函数调用，实际上它会拷贝真实对象。因此如果你保留了真实对象并且与之交互，不要期望从监控对象得到正确的结果。当你在监控对象上调用一个没有被stub的函数时并不会调用真实对象的对应函数，你不会在真实对象上看到任何效果。
+
+Watch out for final methods. Mockito doesn't mock final methods so the bottom line is: when you spy on real objects + you try to stub a final method = trouble. Also you won't be able to verify those method as well.
+
+因此结论就是 : 当你在监控一个真实对象时，你想在stub这个真实对象的函数，那么就是在自找麻烦。或者你根本不应该验证这些函数。
 
 ### 14. [修改没有测试桩的调用的默认返回值 ( 1.7版本之后 ) ]()
 
+You can create a mock with specified strategy for its return values. It's quite advanced feature and typically you don't need it to write decent tests. However, it can be helpful for working with legacy systems.
+It is the default answer so it will be used only when you don't stub the method call.
 
-
-
-
+```java
+   Foo mock = mock(Foo.class, Mockito.RETURNS_SMART_NULLS);
+   Foo mockTwo = mock(Foo.class, new YourOwnAnswer());
+```
+ 
+Read more about this interesting implementation of Answer: [RETURNS_SMART_NULLS](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#RETURNS_SMART_NULLS)
 
 
 ### 15. 为下一步的断言捕获参数 (1.8版本之后)
+
+
+Mockito verifies argument values in natural java style: by using an equals() method. This is also the recommended way of matching arguments because it makes tests clean & simple. In some situations though, it is helpful to assert on certain arguments after the actual verification. For example:
+
+```java
+   ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
+   verify(mock).doSomething(argument.capture());
+   assertEquals("John", argument.getValue().getName());
+```
+ 
+Warning: it is recommended to use ArgumentCaptor with verification but not with stubbing. Using ArgumentCaptor with stubbing may decrease test readability because captor is created outside of assert (aka verify or 'then') block. Also it may reduce defect localization because if stubbed method was not called then no argument is captured.
+In a way ArgumentCaptor is related to custom argument matchers (see javadoc for [ArgumentMatcher](ArgumentMatcher) class). Both techniques can be used for making sure certain arguments where passed to mocks. However, ArgumentCaptor may be a better fit if:
+
+custom argument matcher is not likely to be reused
+you just need it to assert on argument values to complete verification
+Custom argument matchers via [ArgumentMatcher](ArgumentMatcher) are usually better for stubbing.
+
+[ArgumentMatcher]: http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html
