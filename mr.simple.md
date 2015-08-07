@@ -4,7 +4,7 @@
 
 Mockito library enables mocks creation, verification and stubbing.
 
-Mockito库能够Mock对象、验证结果以及存根(stubbing)。
+Mockito库能够Mock对象、验证结果以及打桩(stubbing)。
 
 This javadoc content is also available on the http://mockito.org web page. All documentation is kept in javadocs because it guarantees consistency between what's on the web and what's in the source code. It allows to access documentation straight from the IDE even if you work offline. It motivates Mockito developers to keep documentation up-to-date with the code that they write, every day, with every commit.
 
@@ -51,43 +51,44 @@ This javadoc content is also available on the http://mockito.org web page. All d
 
 ## 目录
 
-0. [迁移到Mockito 2.0]()
-1. [验证某些行为]()
-2. [如何做一些测试桩 (Stub)]()
-3. [参数匹配器 (matchers)]()
-4. [验证函数的确切、最少、从未调用次数]()
-5. [为返回值为void的函数通过Stub抛出异常]()
-6. [按照顺序验证执行结果]()
-7. [确保交互(interaction)操作不会执行在mock对象上]()
-8. [查找冗余的调用]()
-9. [简化mock对象的创建]()
-10. [为连续的调用做测试桩 (stub) ]()
-11. [为回调做测试桩]()
-12. [doReturn()、doThrow()、doAnswer()、doNothing()、doCallRealMethod()系列方法的运用]()
-13. [追踪真实对象]()
-14. [修改没有测试桩的调用的默认返回值 ( 1.7版本之后 ) ]()
-15. [为下一步的断言捕获参数 (1.8版本之后)]()
-16. [真实的局部mocks (1.8版本之后)]()
-17. [重置mocks对象 (1.8版本之后)]()
-18. [故障排查与验证框架的使用 (1.8版本之后)]()
-19. [行为驱动开发的别名 (1.8版本之后)]()
-20. [序列化mock对象]()
-21. [新的注解 : @Captor,@Spy,@ InjectMocks (1.8.3版本之后) ]()
-22. [验证超时 (1.8.5版本之后) ]()
-23. [自动初始化被@Spies, @InjectMocks注解的字段以及构造函数注入 (1.9.0版本之后)]()
-24. [单行测试桩 (1.9.0版本之后) ]()
-25. [验证被忽略的测试桩 (1.9.0版本之后)]()
-26. [mock详情 (1.9.5版本之后)]()
-27. [delegate调用真实的实例 (1.9.5版本之后)]()
-28. [MockMaker API (1.9.5版本之后)]()
-29. [BDD风格的验证 (1.10.0版本之后)]()
-30. [追踪或者Mock抽象类 (1.10.12版本之后)]()
-31. [Mockito mock对象通过ClassLoader能被序列化/反序列化 (1.10.0版本之后)]()
-32. [deep stubs更好的支持泛型 (1.10.0版本之后)]()
-33. [Mockito JUnit 规则 (1.10.17版本之后)]()
-34. [开/关插件 (1.10.15版本之后)]()
-35. [自定义验证失败消息 (2.0.0版本之后)]()
+0. [迁移到Mockito 2.0](#0)
+1. [验证某些行为](#1)
+2. [如何做一些测试桩 (Stub)](#2)
+3. [参数匹配器 (matchers)](#3)
+4. [验证函数的确切、最少、从未调用次数](#4)
+5. [为返回值为void的函数通过Stub抛出异常](#5)
+6. [按照顺序验证执行结果](#6)
+7. [确保交互(interaction)操作不会执行在mock对象上](#7)
+8. [查找冗余的调用](#8)
+9. [简化mock对象的创建](#9)
+10. [为连续的调用做测试桩 (stub) ](#10)
+11. [为回调做测试桩](#11)
+12. [doReturn()、doThrow()、doAnswer()、doNothing()、doCallRealMethod()系列方法的运用](#12)
+13. [监控真实对象](#13)
+14. [修改没有测试桩的调用的默认返回值 ( 1.7版本之后 ) ](#14)
+15. [为下一步的断言捕获参数 (1.8版本之后)](#15)
+16. [真实的局部mocks (1.8版本之后)](#16)
+17. [重置mocks对象 (1.8版本之后)](#17)
+18. [故障排查与验证框架的使用 (1.8版本之后)](#18)
+19. [行为驱动开发的别名 (1.8版本之后)](#19)
+20. [序列化mock对象](#20)
+21. [新的注解 : @Captor,@Spy,@ InjectMocks (1.8.3版本之后) ](#21)
+22. [验证超时 (1.8.5版本之后) ](#22)
+23. [自动初始化被@Spies, @InjectMocks注解的字段以及构造函数注入 (1.9.0版本之后)](#23)
+24. [单行测试桩 (1.9.0版本之后) ](#24)
+25. [验证被忽略的测试桩 (1.9.0版本之后)](#25)
+26. [mock详情 (1.9.5版本之后)](#26)
+27. [delegate调用真实的实例 (1.9.5版本之后)](#27)
+28. [MockMaker API (1.9.5版本之后)](#28)
+29. [BDD风格的验证 (1.10.0版本之后)](#29)
+30. [追踪或者Mock抽象类 (1.10.12版本之后)](#30)
+31. [Mockito mock对象通过ClassLoader能被序列化/反序列化 (1.10.0版本之后)](#31)
+32. [deep stubs更好的支持泛型 (1.10.0版本之后)](#32)
+33. [Mockito JUnit 规则 (1.10.17版本之后)](#33)
+34. [开/关插件 (1.10.15版本之后)](#34)
+35. [自定义验证失败消息 (2.0.0版本之后)](#35)
 
+<b id="0"></b>
 ### 0. 迁移到Mockito 2.0
 
 In order to continue improving Mockito and further improve unit testing experience we want you to upgrade to 2.0. Mockito follows semantic versioning and contains breaking changes only on major version upgrades. In a lifecycle of a library breaking changes are necessary to roll out a set of brand new features that alter the existing behavior or even change the API. We hope that you enjoy Mockito 2.0!
@@ -106,6 +107,7 @@ Don't mock List class 'in real'. Use a real instance instead.
 
 跟着我们的示例来mock 一个List,因为大家都知道它的接口（例如add(),get(), clear()）。不要mock一个真实的List类型,使用一个真实的实例来替代。
 
+<b id="1"></b>
 ### 1. 验证某些行为
 
 ```java
@@ -125,6 +127,8 @@ Don't mock List class 'in real'. Use a real instance instead.
 ```
 一旦mock对象被创建了，mock对象会记住所有的交互。然后你就可能选择性的验证你感兴趣的交互。
 
+
+<b id="2"></b>
 ### 2. [如何做一些测试桩 (Stub)]()
 
 ```java
@@ -166,6 +170,8 @@ Don't mock List class 'in real'. Use a real instance instead.
 * 一旦测试桩函数被调用，该函数将会一致返回固定的值；
 * 上一次调用测试桩函数有时候极为重要-当你调用一个函数很多次时，最后一次调用可能是你所感兴趣的。
 
+
+<b id="3"></b>
 ### 3. [参数匹配器 (matchers)]()
 
 Mockito verifies argument values in natural java style: by using an equals() method. Sometimes, when extra flexibility is required then you might use argument matchers:
@@ -231,7 +237,7 @@ Matcher methods like anyObject(), eq() do not return matchers. Internally, they 
 
 像anyObject(), eq()这样的匹配器函数不会返回匹配器。它们会在内部将匹配器记录到一个栈当中，并且返回一个假的值，通常为null。`这样的实现是由于被Java编译器强加的静态类型安全`。结果就是你不能在验证或者测试桩函数之外使用anyObject(), eq()函数。
 
-
+<b id="4"></b>
 ### 4. [验证函数的确切、最少、从未调用次数]()
 
 ```java
@@ -271,7 +277,7 @@ times(1) is the default. Therefore using times(1) explicitly can be omitted.
 
 verify函数默认验证的是执行了times(1)，也就是某个测试函数是否执行了1次.因此，times(1)通常被省略了。
 
-
+<b id="5"></b>
 ### 5. [为返回值为void的函数通过Stub抛出异常]()
 
 ```java
@@ -289,6 +295,8 @@ Initially, stubVoid(Object) was used for stubbing voids. Currently stubVoid() is
 
 最初，[stubVoid(Object)](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#stubVoid(T)) 函数用于为无返回值的函数打桩。现在stubVoid()函数已经过时,doThrow(Throwable)成为了它的继承者。这是为了提升与 doAnswer(Answer) 函数族的可读性与一致性。
 
+
+<b id="6"></b>
 ### 6. [验证执行执行顺序]()
 
 ```java
@@ -336,6 +344,8 @@ Also, you can create InOrder object passing only mocks that are relevant for in-
 验证执行顺序是非常灵活的-你不需要一个一个的验证所有交互,只需要验证你感兴趣的对象即可。
 另外，你可以仅通过那些需要验证顺序的mock对象来创建InOrder对象。
 
+
+<b id="7"></b>
 ### 7. [确保交互(interaction)操作不会执行在mock对象上]()
 
 ```java
@@ -356,7 +366,7 @@ Also, you can create InOrder object passing only mocks that are relevant for in-
  verifyZeroInteractions(mockTwo, mockThree);
 ```
 
-
+<b id="8"></b>
 ### 8. [查找冗余的调用]()
 
 ```java
@@ -378,6 +388,8 @@ See also `never()` - it is more explicit and communicates the intent well.
 
 `never()`是一种更为明显且易于理解的形式。
 
+
+<b id="9"></b>
 ### 9. [简化mock对象的创建]()
 
 * Minimizes repetitive mock creation code.
@@ -415,6 +427,8 @@ Read more here: MockitoAnnotations
 [runner]: http://site.mockito.org/mockito/docs/current/org/mockito/runners/MockitoJUnitRunner.html
 [rule]: http://site.mockito.org/mockito/docs/current/org/mockito/junit/MockitoRule.html
 
+
+<b id="10"></b>
 ### 10. [为连续的调用做测试桩 (stub) ]()
 
 Sometimes we need to stub with different return value/exception for the same method call. Typical use case could be mocking iterators. Original version of Mockito did not have this feature to promote simple mocking. For example, instead of iterators one could use Iterable or simply collections. Those offer natural ways of stubbing (e.g. using real collections). In rare scenarios stubbing consecutive calls could be useful, though:
@@ -449,6 +463,7 @@ Alternative, shorter version of consecutive stubbing:
    .thenReturn("one", "two", "three");
 ```
 
+<b id="11"></b>
 ### 11. [为回调做测试桩]()
 
 Allows stubbing with generic Answer interface.
@@ -472,6 +487,7 @@ Yet another controversial feature which was not included in Mockito originally. 
  System.out.println(mock.someMethod("foo"));
 ```
 
+<b id="12"></b>
 ### 12. [doReturn()、doThrow()、doAnswer()、doNothing()、doCallRealMethod()系列方法的运用]()
 
 Stubbing voids requires different approach from `when(Object)` because the compiler does not like void methods inside brackets...
@@ -520,7 +536,7 @@ but you may prefer to use these methods in place of the alternative with `when()
 * [doCallRealMethod()](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#doCallRealMethod())
 
 
-
+<b id="13"></b>
 ### 13. [监控真实对象]()
 You can create spies of real objects. When you use the spy then the real methods are called (unless a method was stubbed).
 Real spies should be used carefully and occasionally, for example when dealing with legacy code.
@@ -586,35 +602,52 @@ Watch out for final methods. Mockito doesn't mock final methods so the bottom li
 
 因此结论就是 : 当你在监控一个真实对象时，你想在stub这个真实对象的函数，那么就是在自找麻烦。或者你根本不应该验证这些函数。
 
+<b id="14"></b>
 ### 14. [修改没有测试桩的调用的默认返回值 ( 1.7版本之后 ) ]()
 
 You can create a mock with specified strategy for its return values. It's quite advanced feature and typically you don't need it to write decent tests. However, it can be helpful for working with legacy systems.
 It is the default answer so it will be used only when you don't stub the method call.
+
+你可以指定策略来创建mock对象的返回值。这是一个高级特性，通常来说，你不需要写这样的测试。然后，它对于遗留系统来说是很有用处的。当你不需要为函数调用打桩时你可以指定一个默认的answer。
 
 ```java
    Foo mock = mock(Foo.class, Mockito.RETURNS_SMART_NULLS);
    Foo mockTwo = mock(Foo.class, new YourOwnAnswer());
 ```
  
-Read more about this interesting implementation of Answer: [RETURNS_SMART_NULLS](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#RETURNS_SMART_NULLS)
+Read more about this interesting implementation of Answer: 
 
+关于RETURNS_SMART_NULLS更多的信息请查看 : 
+[RETURNS_SMART_NULLS文档](http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#RETURNS_SMART_NULLS) 。
 
+<b id="15"></b>
 ### 15. 为下一步的断言捕获参数 (1.8版本之后)
-
 
 Mockito verifies argument values in natural java style: by using an equals() method. This is also the recommended way of matching arguments because it makes tests clean & simple. In some situations though, it is helpful to assert on certain arguments after the actual verification. For example:
 
+Mockito以java代码风格的形式来验证参数值 : 即通过使用`equals()`函数。这也是我们推荐用于参数匹配的方式，因为这样会使得测试代码更简单、简洁。在某些情况下，当验证交互之后要检测真实的参数值时这将变得有用。例如 ： 
+
 ```java
    ArgumentCaptor<Person> argument = ArgumentCaptor.forClass(Person.class);
+   // 参数捕获
    verify(mock).doSomething(argument.capture());
+   // 使用equal断言
    assertEquals("John", argument.getValue().getName());
 ```
  
 Warning: it is recommended to use ArgumentCaptor with verification but not with stubbing. Using ArgumentCaptor with stubbing may decrease test readability because captor is created outside of assert (aka verify or 'then') block. Also it may reduce defect localization because if stubbed method was not called then no argument is captured.
 In a way ArgumentCaptor is related to custom argument matchers (see javadoc for [ArgumentMatcher](ArgumentMatcher) class). Both techniques can be used for making sure certain arguments where passed to mocks. However, ArgumentCaptor may be a better fit if:
 
-custom argument matcher is not likely to be reused
-you just need it to assert on argument values to complete verification
+警告 : 我们建议使用没有测试桩的ArgumentCaptor来验证，因为使用含有测试桩的ArgumentCaptor会降低测试代码的可读性，因为captor是在断言代码块之外创建的。另一个好处是它可以降低本地化的缺点，因为如果测试桩函数没有被调用，那么参数就不会被捕获。总之，ArgumentCaptor与自定义的参数匹配器相关(可以查看[ArgumentMatcher类的文档](ArgumentMatcher) )。这两种技术都能用于检测外部传递到Mock对象的参数。然而，使用ArgumentCaptor在以下的情况下更合适 : 
+
+* custom argument matcher is not likely to be reused
+* you just need it to assert on argument values to complete verification
+
+* 自定义不能被重用的参数匹配器
+* 你仅需要断言参数值
+
 Custom argument matchers via [ArgumentMatcher](ArgumentMatcher) are usually better for stubbing.
+
+自定义参数匹配器相关的资料你可以参考[ArgumentMatcher](ArgumentMatcher)文档。
 
 [ArgumentMatcher]: http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html
