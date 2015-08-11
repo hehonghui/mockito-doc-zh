@@ -80,8 +80,9 @@ partial mock是如果适应这种模式的呢？好吧！它不仅仅是，parti
 
 #方法详情
 ##after
-
+```java
 	public static VerificationAfterDelay after(long millis)
+```
 
 在给定的时间后进行验证。它会为了预期的效果进行等待一段时间后进行验证，而不是因为没发生而立即失败。这可能对于测试多并发条件非常有用。<br><br>
 
@@ -90,6 +91,8 @@ after()等待整个周期的特点不同于timeout()，而timeout()一旦验证�
 感觉这个方法应该少使用——找到更好的方法测试你的多线程系统。
 
 对尚未实现的工作进行验证。
+
+```java
 
 	//passes after 100ms, if someMethod() has only been called once at that time.<br>
 	verify(mock, after(100)).someMethod();<br>
@@ -105,7 +108,7 @@ after()等待整个周期的特点不同于timeout()，而timeout()一旦验证�
 	//verifies someMethod() after a given time span using given verification mode
 	//useful only if you have your own custom verification modes.
 	verify(mock, new After(100, yourOwnVerificationMode)).someMethod();
-
+```
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
 
@@ -119,10 +122,15 @@ after()等待整个周期的特点不同于timeout()，而timeout()一旦验证�
 
 
 ##atLeast
-	public static VerificationMode atLeast(int minNumberOfInvocations)<br><br>
+```java
+	public static VerificationMode atLeast(int minNumberOfInvocations)
+```
+
 允许至少进行x次验证。例如：
 
+```java
 	verify(mock, atLeast(3)).someMethod("some arg");
+```
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
 
@@ -135,11 +143,15 @@ after()等待整个周期的特点不同于timeout()，而timeout()一旦验证�
 * verification mode<br><br>
 
 ##atLeastOnce
+```java
 	public static VerificationMode atLeastOnce()
+```
 
 至少进行一次一次验证。例如:
 
+```java
 	verify(mock, atLeastOnce()).someMethod("some arg");
+```
 
 atLeast(1)的别名.
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
@@ -149,11 +161,15 @@ atLeast(1)的别名.
 * verification mode
 
 ##atMost
+```java
 	public static VerificationMode atMost(int maxNumberOfInvocations)
+```
 
 至多进行x次验证. 例如:
 
+```java
 	verify(mock, atMost(3)).someMethod("some arg");
+```
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
 
@@ -166,12 +182,14 @@ atLeast(1)的别名.
 * verification mode
 
 ##calls
-
+```java
 	public static VerificationMode calls(int wantedNumberOfInvocations)
+```
 
 允许顺序进行non-greedy验证. 例如:<br>
-
+```java
 	inOrder.verify( mock, calls( 2 )).someMethod( "some arg" );
+```
 <ul>
 <li>如果这个方法调用3次不会失败，不同于times(2)</li>
 <li>不会标记第三次验证，不同于atLeast(2)</li>
@@ -188,8 +206,9 @@ atLeast(1)的别名.
 
 #继承org.mockito.Matchers的方法
 ##any
-
+```java
 	public static <T> T any()<br><br>
+```
 
 匹配任何值，包括null
 
@@ -205,7 +224,9 @@ anyObject()的别名
 	
 <!--第二行-->
 ##any
+```java
 	public static <T> T any(Class<T> clazz)
+```
 
 匹配任何对象，包括null
 
@@ -220,7 +241,9 @@ anyObject()的别名
 * null
 <!--第三行-->
 ##anyBoolean
+```java
 	public static boolean anyBoolean()
+```
 
 任何boolean类型或非空(non-null)的Boolean.
 
@@ -232,7 +255,9 @@ anyObject()的别名
 
 <!--第四行-->
 ##anyByte
+```java
 	public static byte anyByte()
+```
 
 任何byte类型变量或非空(non-null)Byte.
 
@@ -244,7 +269,9 @@ anyObject()的别名
 
 <!--第五行-->
 ##anyChar
+```java
 	public static char anyChar()
+```
 
 任何char类型变量或非空(non-null)的Character.
 
@@ -256,7 +283,9 @@ anyObject()的别名
 
 <!--第六行-->
 ##anyCollection
-public static [Collection](http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true") anyCollection()
+```java
+public static Collection anyCollection()
+```
 
 任何非空(non-null)的Collection.
 
@@ -268,8 +297,9 @@ public static [Collection](http://docs.oracle.com/javase/8/docs/api/java/util/Co
 
 <!--第七行-->
 ##anyCollectionOf
-
-public static < T > <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true">Collection</a> < T > anyCollectionOf(Class<T> clazz)
+```java
+public static < T > Collection < T > anyCollectionOf(Class<T> clazz)
+```
 
 通用友好的别名anyCollection()。为了保持代码清洁，通过@SuppressWarnings("unchecked")来进行替代编译器警告。
 
@@ -289,7 +319,9 @@ public static < T > <a href="http://docs.oracle.com/javase/8/docs/api/java/util/
 
 <!--第八行-->
 ##anyDouble
+```java
 	public static double anyDouble()
+```
 
 任何double类型或非空(non-null)的Double.
 
@@ -301,7 +333,9 @@ public static < T > <a href="http://docs.oracle.com/javase/8/docs/api/java/util/
 
 <!--第九行-->
 ##anyFloat
+```java
 	public static float anyFloat()
+```
 
 任何float类型或非空(non-null)Float.
 
@@ -313,7 +347,9 @@ public static < T > <a href="http://docs.oracle.com/javase/8/docs/api/java/util/
 
 <!--第十行-->
 ##anyInt
+```java
 	public static int anyInt()
+```
 
 任何int或非空(non-null)Integer.
 
@@ -325,7 +361,9 @@ public static < T > <a href="http://docs.oracle.com/javase/8/docs/api/java/util/
 
 <!--第十一行-->
 ##anyList
-public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true">List</a> anyList()
+```java
+public static List anyList()
+```
 
 任何非空(non-null)List.
 
@@ -337,7 +375,9 @@ public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.h
 
 <!--第十二行-->
 ##anyListOf
-public static < T >  <a href="http://docs.oracle.com/javase/8/docs/api/java/util/List.html?is-external=true">List</a> < T > anyListOf(Class< T > clazz)
+```java
+public static < T >  List < T > anyListOf(Class< T > clazz)
+```
 
 通用友好的别名anyList()。为了保持代码清洁，通过@SuppressWarnings("unchecked")来进行替代编译器警告。
 
@@ -357,8 +397,9 @@ public static < T >  <a href="http://docs.oracle.com/javase/8/docs/api/java/util
 
 <!--第十三行-->
 ##anyLong
-
+```java
 	public static long anyLong()
+```
 
 任何long类型或非空(non-null)Long.<br><br>
 
@@ -370,7 +411,9 @@ public static < T >  <a href="http://docs.oracle.com/javase/8/docs/api/java/util
 
 <!--第十四行-->
 ##anyMap
-public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true">Map</a> anyMap()
+```java
+public static Map anyMap()
+```
 
 任何非空(non-null)Map.
 
@@ -382,8 +425,9 @@ public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.ht
 
 <!--第十五行-->
 ##anyMapOf
-
-public static < K,V> <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true">Map</a> < K,V> anyMapOf(Class< K> keyClazz, Class< V> valueClazz)
+```java
+public static < K,V> Map < K,V> anyMapOf(Class< K> keyClazz, Class< V> valueClazz)
+```
 
 通用友好的别名anyMap()。为了保持代码清洁，通过@SuppressWarnings("unchecked")来进行替代编译器警告。
 
@@ -404,8 +448,9 @@ public static < K,V> <a href="http://docs.oracle.com/javase/8/docs/api/java/util
 
 <!--第十六行-->
 ##anyObject
-
+```java
 public static < T> T anyObject()
+```
 
 匹配任何事物, 包含null.
 
@@ -419,8 +464,9 @@ public static < T> T anyObject()
 
 <!--第十七行-->
 ##anySet</b>
-
+```java
 public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true">Set</a> anySet()
+```
 
 任何非空(non-null)Set.<br><br>
 
@@ -432,8 +478,9 @@ public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.ht
 
 <!--第十八行-->
 ##anySetOf
-
-public static < T> <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true">Set</a> < T> anySetOf(Class< T> clazz)
+```java
+public static < T> Set < T> anySetOf(Class< T> clazz)
+```
 
 通用友好的别名anySet()。为了保持代码清洁，通过@SuppressWarnings("unchecked")来进行替代编译器警告。
 
@@ -453,7 +500,9 @@ public static < T> <a href="http://docs.oracle.com/javase/8/docs/api/java/util/S
 
 <!--第十九行-->
 ##anyShort
+```java
 	public static short anyShort()
+```
 
 任何short类型或非空(non-null)Short.
 
@@ -465,7 +514,9 @@ public static < T> <a href="http://docs.oracle.com/javase/8/docs/api/java/util/S
 
 <!--第二十行-->
 ##anyString
+```java
 	public static String anyString()
+```
 
 任何非空(non-null)String
 
@@ -477,26 +528,30 @@ public static < T> <a href="http://docs.oracle.com/javase/8/docs/api/java/util/S
 
 <!--第二十一行-->
 ##anyVararg
-
+```java
 	public static < T> T anyVararg()
+```
 
 任何vararg类型, 即任何参数(arguments)的number和values
 
 例如:
 
-	//verification:<br>
-	mock.foo(1, 2);<br>
-	mock.foo(1, 2, 3, 4);<br><br>
+```java
 
-	verify(mock, times(2)).foo(anyVararg());<br><br>
+	//verification:
+	mock.foo(1, 2);
+	mock.foo(1, 2, 3, 4);
+	verify(mock, times(2)).foo(anyVararg());
 
-	//stubbing:<br>
-	when(mock.foo(anyVararg()).thenReturn(100);<br><br>
+	//stubbing:
+	when(mock.foo(anyVararg()).thenReturn(100);
 
-	//prints 100<br>
-	System.out.println(mock.foo(1, 2));<br>
-	//also prints 100<br>
+	//prints 100
+	System.out.println(mock.foo(1, 2));
+	//also prints 100<
 	System.out.println(mock.foo(1, 2, 3, 4));
+
+```
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
@@ -506,8 +561,9 @@ public static < T> <a href="http://docs.oracle.com/javase/8/docs/api/java/util/S
 
 <!--第二十二行-->
 ##argThat
-
-public static < T> T argThat(<a href="http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html">ArgumentMatcher</a> < T> matcher)
+```java
+public static < T> T argThat(ArgumentMatcher < T> matcher)
+```
 
 允许创建自定义的参数匹配模式.这个API在2.0中已经改变,请阅读<a href="http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html">ArgumentMatcher</a>基础指南。
 
@@ -527,8 +583,9 @@ public static < T> T argThat(<a href="http://site.mockito.org/mockito/docs/curre
 
 <!--第二十三行-->
 ##booleanThat
-
-public static boolean booleanThat(<a href="http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html">ArgumentMatcher</a> < Boolean> matcher)
+```java
+public static boolean booleanThat(ArgumentMatcher < Boolean> matcher)
+```
 
 允许创建自定义的Boolean类型参数匹配模式(Boolean argument matchers).
 
@@ -543,8 +600,9 @@ public static boolean booleanThat(<a href="http://site.mockito.org/mockito/docs/
 
 <!--第二十四行-->
 ##byteThat
-
-public static byte byteThat(<a href="http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html">ArgumentMatcher</a> < Byte> matcher)
+```java
+public static byte byteThat(ArgumentMatcher < Byte> matcher)
+```
 
 允许创建自定义的Byte类型参数匹配模式(Byte argument matchers)
 
@@ -560,8 +618,9 @@ public static byte byteThat(<a href="http://site.mockito.org/mockito/docs/curren
 
 <!--第二十五行-->
 ##charThat
-
-public static char charThat(<a href="http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html">ArgumentMatcher</a> < Character> matcher)
+```java
+public static char charThat(ArgumentMatcher < Character> matcher)
+```
 
 允许创建自定义的Character类型参数匹配模式(Character argument matchers)
 
@@ -577,8 +636,9 @@ public static char charThat(<a href="http://site.mockito.org/mockito/docs/curren
 
 <!--第二十六行-->
 ##contains
-
+```java
 	public static String contains(String substring)<br><br>
+```
 
 String参数包含给定的substring字符串.
 
