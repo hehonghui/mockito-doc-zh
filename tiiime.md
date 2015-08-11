@@ -96,7 +96,7 @@ Mock 的 delegates 相对于标准的 spy 来说功能弱了很多，不过在�
  ---
 
 
- ###31. [(new) Mockito mocks 可以通过 classloaders 序列化/反序列化][serilization_across_classloader] (Since 1.10.0)
+###31. [(new) Mockito mocks 可以通过 classloaders 序列化/反序列化][serilization_across_classloader] (Since 1.10.0)
 
  Mockito 通过 classloader 引入序列化。和其他形式的序列化一样，所有 mock 层的对象都要被序列化，
  包括 answers。因为序列化模式需要大量的工作，所以这是一个可选择设置。
@@ -117,7 +117,7 @@ Mock 的 delegates 相对于标准的 spy 来说功能弱了很多，不过在�
 
  ---
 
- ###32. [(new) Deep stubs 更好的泛型支持][better_generic_support_with_deep_stubs] (Since 1.10.0)
+###32. [(new) Deep stubs 更好的泛型支持][better_generic_support_with_deep_stubs] (Since 1.10.0)
 
  Deep stubbing 现在可以更好的查找类的泛型信息。这就意味着像这样的类
  不必去 mock 它的行为就可以使用。
