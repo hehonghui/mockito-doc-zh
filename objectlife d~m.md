@@ -4,7 +4,7 @@
 
 Adds a description to be printed if verification fails.
 
-添加验证失败时打印的内容
+添加验证失败时要输出的文字内容
 
 ```java
 
@@ -16,7 +16,7 @@ verify(mock, description("This will print on failure")).someMethod("some arg");
 
 * description - The description to print on failure.
 
-打印的内容
+输出的文字内容
 
 **Returns:**
 
@@ -36,8 +36,9 @@ verify(mock, description("This will print on failure")).someMethod("some arg");
 Use doAnswer() when you want to stub a void method with generic [Answer](http://site.mockito.org/mockito/docs/current/org/mockito/stubbing/Answer.html).
 Stubbing voids requires different approach from when(Object) because the compiler does not like void methods inside brackets...
 
-当你想使用通用类[Answer](http://site.mockito.org/mockito/docs/current/org/mockito/stubbing/Answer.html)来测试一个void函数时可以使用`doAnswer()`，
-Stubbing voids要求与`when(Object)`方法不同，因为编译器不喜欢在大括号内使用void函数。
+
+当你想要测试一个无返回值的函数时，可以使用一个含有泛型类[Answer](http://site.mockito.org/mockito/docs/current/org/mockito/stubbing/Answer.html)参数的doAnswer()函数。为无返回值的函数做测试桩与`when(Objecy)`方法不同，因为编译器不喜欢在大括号内使用void函数。
+
 
 Example:
 
@@ -77,20 +78,20 @@ See examples in javadoc for Mockito class
 
 Use doCallRealMethod() when you want to call the real implementation of a method.
 
-如果你想调用某一个方法的真实现请使用`doCallRealMethod()`。
+如果你想调用某一个方法的真实实现请使用`doCallRealMethod()`。
 
 As usual you are going to read **the partial mock warning**: Object oriented programming is more less tackling complexity by dividing the complexity into separate, specific, SRPy objects. How does partial mock fit into this paradigm? Well, it just doesn't... Partial mock usually means that the complexity has been moved to a different method on the same object. In most cases, this is not the way you want to design your application.
 
-像往常一样你需要阅读**局部的模拟警告**:面向对象编程通过将复杂的事物分解成单独的、具体的、SRPY对象来减少对复杂事件的处理。
+像往常一样你需要阅读**局部的mock对象警告**:面向对象编程通过将复杂的事物分解成单独的、具体的、SRPY对象来减少对复杂事件的处理。
 局部模拟是如何符合这种范式的呢。？局部模拟通常情况下是指在对象相同的情况下那些复杂的事物被移动另一个不同的方法中。在大多数情况下，并没有按照你所希望的方式来设计你的应用。
 
 However, there are rare cases when partial mocks come handy: dealing with code you cannot change easily (3rd party interfaces, interim refactoring of legacy code etc.) However, I wouldn't use partial mocks for new, test-driven & well-designed code.
 
-然而，使用局部模拟也会有个别情况:有些代码你并不能非常容易的改变(3rd接口,临时遗留代码的重构等)，但是我对于新的、测试驱动及良好设计的代码不会使用局部模拟。
+然而，使用局部mock对象也会有个别情况:有些代码你并不能非常容易的改变(3rd接口,临时遗留代码的重构等)，但是我对于新的、测试驱动及良好设计的代码不会使用局部mock对象。
 
 See also javadoc spy(Object) to find out more about partial mocks. **Mockito.spy() is a recommended way of creating partial mocks**. The reason is it guarantees real methods are called against correctly constructed object because you're responsible for constructing the object passed to spy() method.
 
-同样在javadoc中`spy(Object)`阅读更多关于partial mocks的说明.**推荐使用`Mockito.spy()`来创建局部模拟**原因是由于你负责构建对象并传值到`spy()`中，它只管保证被调用。
+同样在javadoc中`spy(Object)`阅读更多关于partial mocks的说明.**推荐使用`Mockito.spy()`来创建局部mock对象**原因是由于你负责构建对象并传值到`spy()`中，它只管保证被调用。
 
 Example:
 
@@ -271,7 +272,7 @@ A new exception instance will be created for each method invocation.
 
 Stubbing voids requires different approach from when(Object) because the compiler does not like void methods inside brackets...
 
-测试void函数需要与使用`when(Object)`不同的方式，因为编译器不喜欢大括号内有void函数
+为无返回值的函数做测试桩与`when(Objecy)`方法不同，因为编译器不喜欢在大括号内使用void函数。
 
 Example:
 
