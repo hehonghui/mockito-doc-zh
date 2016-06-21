@@ -18,7 +18,7 @@
 <table>
 <tbody>
 <tr>
-<td><b>CALLS_REAL_METHODS</b></td>
+<td>**CALLS_REAL_METHODS**</td>
 </tr>
 <tr>
 <td>public static final Answer<Object> CALLS_REAL_METHODS<br><br>
@@ -112,11 +112,11 @@ after()等待整个周期的特点不同于timeout()，而timeout()一旦验证�
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * millis - - time span in milliseconds
 
-<b>Returns:</b>
+**Returns:**
 
 * verification mode
 
@@ -134,11 +134,11 @@ after()等待整个周期的特点不同于timeout()，而timeout()一旦验证�
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * minNumberOfInvocations - invocations的最小次数
 
-<b>Returns:</b>
+**Returns:**
 
 * verification mode<br><br>
 
@@ -156,7 +156,7 @@ after()等待整个周期的特点不同于timeout()，而timeout()一旦验证�
 atLeast(1)的别名.
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * verification mode
 
@@ -173,11 +173,11 @@ atLeast(1)的别名.
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html">Mockito</a>类的javadoc帮助文档中的例子
 
-<b>Parameters::</b>
+**Parameters::**
 
 * maxNumberOfInvocations - invocations的最大次数
 
-<b>Returns:</b>
+**Returns:**
 
 * verification mode
 
@@ -196,11 +196,11 @@ atLeast(1)的别名.
 </ul>
 这个verification mode只能用于顺序验证.
 
-<b>Parameters::</b>
+**Parameters::**
 
 * wantedNumberOfInvocations - 验证的次数
 
-<b>Returns:</b>
+**Returns:**
 
 * verification mode<br><br>
 
@@ -218,7 +218,7 @@ anyObject()的别名
 
 这是: anyObject() and any(java.lang.Class)的别名
 
-<b>Returns:</b>
+**Returns:**
 
 * null
 	
@@ -236,7 +236,7 @@ anyObject()的别名
 
 这是: anyObject() and any(java.lang.Class)的别名
 
-<b>Returns:</b>
+**Returns:**
 
 * null
 <!--第三行-->
@@ -249,7 +249,7 @@ anyObject()的别名
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * false
 
@@ -263,7 +263,7 @@ anyObject()的别名
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 0
 
@@ -277,7 +277,7 @@ anyObject()的别名
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 0
 
@@ -291,7 +291,7 @@ public static Collection anyCollection()
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 空Collection.
 
@@ -309,11 +309,11 @@ public static < T > Collection < T > anyCollectionOf(Class<T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters</b>
+**Parameters**
 
 * clazz - 类型属于Collection类型避免类型转换(Casting)
 
-<b>Returns:</b>
+**Returns:**
 
 * 空Collection.<br><br>
 
@@ -327,7 +327,7 @@ public static < T > Collection < T > anyCollectionOf(Class<T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 0.
 
@@ -341,7 +341,7 @@ public static < T > Collection < T > anyCollectionOf(Class<T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 0.
 
@@ -355,7 +355,7 @@ public static < T > Collection < T > anyCollectionOf(Class<T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 0.
 
@@ -369,7 +369,7 @@ public static List anyList()
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 空List.
 
@@ -387,11 +387,11 @@ public static < T >  List < T > anyListOf(Class< T > clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * clazz - 类型属于List类型避免类型转换(Casting)
 
-<b>Returns:</b>
+**Returns:**
 
 * 空List.
 
@@ -405,7 +405,7 @@ public static < T >  List < T > anyListOf(Class< T > clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 0.
 
@@ -419,7 +419,7 @@ public static Map anyMap()
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 空Map.
 
@@ -437,12 +437,12 @@ public static < K,V> Map < K,V> anyMapOf(Class< K> keyClazz, Class< V> valueClaz
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b><br>
+**Parameters:**<br>
 
 * keyClazz - map key类型避免类型强制转换(Casting)
 * valueClazz - value类型避免类型强制转换(Casting)
 
-<b>Returns:</b>
+**Returns:**
 
 * 空Map.
 
@@ -458,12 +458,12 @@ public static < T> T anyObject()
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * empty null.
 
 <!--第十七行-->
-##anySet</b>
+##anySet**
 ```java
 public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true">Set</a> anySet()
 ```
@@ -472,7 +472,7 @@ public static <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Set.ht
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 空Set.
 
@@ -490,11 +490,11 @@ public static < T> Set < T> anySetOf(Class< T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * clazz - 类型属于Set为了避免类型强制转换(Casting)
 
-<b>Returns:</b>
+**Returns:**
 
 * 空Set.
 
@@ -508,7 +508,7 @@ public static < T> Set < T> anySetOf(Class< T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 0.
 
@@ -522,7 +522,7 @@ public static < T> Set < T> anySetOf(Class< T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * 空String ("").
 
@@ -555,7 +555,7 @@ public static < T> Set < T> anySetOf(Class< T> clazz)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Returns:</b>
+**Returns:**
 
 * null.
 
@@ -573,11 +573,11 @@ public static < T> T argThat(ArgumentMatcher < T> matcher)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/ArgumentMatcher.html">ArgumentMatcher</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * matcher - 取决于选择的参数匹配模式(argument matches)
 
-<b>Returns:</b>
+**Returns:**
 
 * null.
 
@@ -591,10 +591,10 @@ public static boolean booleanThat(ArgumentMatcher < Boolean> matcher)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * matcher - 取决于选择的参数匹配模式(argument matches)
-<b>Returns:</b>
+**Returns:**
 
 * false.
 
@@ -608,11 +608,11 @@ public static byte byteThat(ArgumentMatcher < Byte> matcher)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * matcher - 取决于选择的参数匹配模式(argument matches)
 
-<b>Returns:</b>
+**Returns:**
 
 * 0.
 
@@ -626,28 +626,29 @@ public static char charThat(ArgumentMatcher < Character> matcher)
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * matcher - 取决于选择的参数匹配模式(argument matches)
 
-<b>Returns:</b>
+**Returns:**
 
 * 0.
 
 <!--第二十六行-->
-##contains
+
+## contains
 ```java
-	public static String contains(String substring)<br><br>
+	public static String contains(String substring)
 ```
 
 String参数包含给定的substring字符串.
 
 参照<a href="http://site.mockito.org/mockito/docs/current/org/mockito/Matchers.html">Matchers</a>类的javadoc帮助文档中的例子
 
-<b>Parameters:</b>
+**Parameters:**
 
 * substring - substring字符串.
 
-<b>Returns:</b>
+**Returns:**
 
 * 空String ("").
